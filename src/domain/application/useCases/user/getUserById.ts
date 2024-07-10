@@ -1,6 +1,6 @@
-import { User } from "@/domain/entities/User"
-import { IUsersRepository } from "../../repositories/IUsersRepository"
-import { UserNotFoundError } from "../_errors/UserNotFoundError"
+import { User } from '@/domain/entities/User'
+import { IUsersRepository } from '../../repositories/IUsersRepository'
+import { UserNotFoundError } from '../_errors/UserNotFoundError'
 
 type GetUserByIdUseCaseRequest = {
   userId: string
@@ -11,19 +11,19 @@ type GetUserByIdUseCaseResponse = {
 }
 
 export class GetUserByIdUseCase {
-  constructor(private usersRepository: IUsersRepository) {
-    
-  }
-  async execute({userId}: GetUserByIdUseCaseRequest): Promise<GetUserByIdUseCaseResponse> {
+  constructor(private usersRepository: IUsersRepository) {}
+
+  async execute({
+    userId,
+  }: GetUserByIdUseCaseRequest): Promise<GetUserByIdUseCaseResponse> {
     const user = await this.usersRepository.findById(userId)
 
-    if(!user){
+    if (!user) {
       throw new UserNotFoundError()
     }
 
     return {
-      user
+      user,
     }
-
   }
 }

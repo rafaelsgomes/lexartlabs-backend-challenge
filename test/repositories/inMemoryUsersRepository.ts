@@ -1,5 +1,5 @@
-import { IUsersRepository } from "@/domain/application/repositories/IUsersRepository";
-import { User } from "@/domain/entities/User";
+import { IUsersRepository } from '@/domain/application/repositories/IUsersRepository'
+import { User } from '@/domain/entities/User'
 
 export class InMemoryUsersRepository implements IUsersRepository {
   public items: User[] = []
@@ -8,34 +8,33 @@ export class InMemoryUsersRepository implements IUsersRepository {
   }
 
   async save(user: User): Promise<void> {
-    const userIndex = this.items.findIndex(item => item.id === user.id)
+    const userIndex = this.items.findIndex((item) => item.id === user.id)
 
     this.items[userIndex] = user
   }
 
   async findByEmail(email: string): Promise<User | null> {
-  const user = this.items.find(user => user.email === email)
+    const user = this.items.find((user) => user.email === email)
 
-  if(!user){
-    return null
-  }
+    if (!user) {
+      return null
+    }
 
-  return user
-
+    return user
   }
 
   async findById(userId: string): Promise<User | null> {
-    const user = this.items.find(user => user.id === userId)
+    const user = this.items.find((user) => user.id === userId)
 
-    if(!user){
+    if (!user) {
       return null
     }
-  
+
     return user
   }
 
   async delete(user: User): Promise<void> {
-    const userIndex = this.items.findIndex(item => item.id === user.id)
+    const userIndex = this.items.findIndex((item) => item.id === user.id)
 
     this.items.splice(userIndex, 1)
   }
