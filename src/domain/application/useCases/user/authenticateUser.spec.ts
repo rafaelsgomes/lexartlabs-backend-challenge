@@ -11,7 +11,7 @@ let encrypter: InMemoryEncrypter
 let repository: InMemoryUsersRepository
 let sut: AuthenticateUserUseCase
 
-describe('Create User', ()=> {
+describe('Authenticate User', ()=> {
   beforeEach(()=> {
     hasher = new InMemoryHasher()
     encrypter = new InMemoryEncrypter()
