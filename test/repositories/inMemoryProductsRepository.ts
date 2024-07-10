@@ -49,7 +49,7 @@ export class InMemoryProductsRepository implements IProductsRepository {
       const productIndex = this.items.findIndex(
         (item) => item.id === product.id,
       )
-      this.items.splice(productIndex)
+      this.items.splice(productIndex, 1)
     })
   }
 }
