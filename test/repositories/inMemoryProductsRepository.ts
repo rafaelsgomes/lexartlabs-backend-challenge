@@ -21,6 +21,11 @@ export class InMemoryProductsRepository implements IProductsRepository {
     return products
   }
 
+  async findManyProducts(page: number): Promise<Product[]> {
+    const products = this.items.slice((page - 1) * 50, page * 50)
+    return products
+  }
+
   async findById(productId: string): Promise<Product | null> {
     const product = this.items.find((item) => item.id === productId)
 
