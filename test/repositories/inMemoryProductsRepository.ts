@@ -39,7 +39,7 @@ export class InMemoryProductsRepository implements IProductsRepository {
   async delete(productId: string): Promise<void> {
     const productIndex = this.items.findIndex((item) => item.id === productId)
 
-    this.items.slice(productIndex, 1)
+    this.items.splice(productIndex, 1)
   }
 
   async deleteAllByUserId(userId: string): Promise<void> {
@@ -49,7 +49,7 @@ export class InMemoryProductsRepository implements IProductsRepository {
       const productIndex = this.items.findIndex(
         (item) => item.id === product.id,
       )
-      this.items.slice(productIndex)
+      this.items.splice(productIndex)
     })
   }
 }
