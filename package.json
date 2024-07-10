@@ -6,14 +6,22 @@
 	"scripts": {
 		"start:dev": "tsx watch src/infra/server.ts",
 		"start": "node build/infra/server.js",
-		"build": "tsup src --out-dir build"
+		"build": "tsup src --out-dir build",
+		"test": "vitest run",
+		"test:watch": "vitest"
 	},
 	"author": "contato@rafaelsgomes.com.br",
 	"license": "ISC",
 	"devDependencies": {
+		"@faker-js/faker": "^8.4.1",
+		"@swc/core": "^1.6.13",
 		"@types/node": "^20.14.10",
+		"@vitest/coverage-v8": "^2.0.1",
 		"tsup": "^8.1.0",
 		"tsx": "^4.16.2",
-		"typescript": "^5.5.3"
+		"typescript": "^5.5.3",
+		"unplugin-swc": "^1.5.1",
+		"vite-tsconfig-paths": "^4.3.2",
+		"vitest": "^2.0.1"
 	}
 }
