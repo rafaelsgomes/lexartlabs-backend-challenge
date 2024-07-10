@@ -5,5 +5,5 @@ export interface IUsersRepository {
   save(user: User): Promise<void>
   findByEmail(email: string): Promise<User | null>
   findById(userId: string): Promise<User | null>
-  delete(user: User): Promise<void>
+  delete(userId: string): Promise<void>
 }
