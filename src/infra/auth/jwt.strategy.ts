@@ -9,23 +9,21 @@ const tokenPayloadSchema = z.object({
 
 export type UserPayload = z.infer<typeof tokenPayloadSchema>
 
-export class JwtStrategy {
-  async verifyJwt() {
-    passport.use(
-      new Strategy(
-        {
-          jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-          secretOrKey: Buffer.from(env.JWT_PUBLIC_KEY, 'base64'),
-          algorithms: ['RS256'],
-        },
-        (payload: UserPayload, done) => {
-          try {
-            return done(null, payload.sub)
-          } catch (error) {
-            return done(error, false)
-          }
-        },
-      ),
-    )
-  }
-}
+passport.use(
+  new Strategy(
+    {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: Buffer.from(env.JWT_PUBLIC_KEY, 'base64'),
+      algorithms: ['RS256'],
+    },
+    (payload: UserPayload, done) => {
+      try {
+        return done(null, tokenPayloadSchema.parse(payload))
+      } catch (error) {
+        return done(error, false)
+      }
+    },
+  ),
+)
+
+export default passport

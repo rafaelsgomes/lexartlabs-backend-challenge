@@ -3,7 +3,7 @@ import { app } from '@/infra/app'
 import { UserFactory } from 'test/factories/makeUser'
 import { hash } from 'bcryptjs'
 
-describe('Create User (E2E)', () => {
+describe('Authenticate User (E2E)', () => {
   let userFactory: UserFactory
 
   beforeAll(async () => {
