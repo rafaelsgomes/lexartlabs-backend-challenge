@@ -21,6 +21,7 @@
 		"@types/node": "^20.14.10",
 		"@vitest/coverage-v8": "^2.0.1",
 		"dotenv": "^16.4.5",
+		"sequelize-cli": "^6.6.2",
 		"tsup": "^8.1.0",
 		"tsx": "^4.16.2",
 		"typescript": "^5.5.3",
@@ -30,6 +31,9 @@
 	},
 	"dependencies": {
 		"express": "^4.19.2",
+		"pg": "^8.12.0",
+		"pg-hstore": "^2.3.4",
+		"sequelize": "^6.37.3",
 		"zod": "^3.23.8"
 	}
 }

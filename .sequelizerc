@@ -1,0 +1,13 @@
+require('dotenv').config()
+
+const path = require('path')
+
+module.exports = {
+    config: path.resolve(__dirname, 'src', 'infra', 'database', 'sequelize', 'config', 'config.js'),
+    // Folder to seeders
+    'seeders-path': path.resolve(__dirname, 'src', 'infra', 'database', 'sequelize', 'seeders'),
+    // Folder to migrations
+    'migrations-path': path.resolve(__dirname, 'src', 'infra', 'database', 'sequelize', 'migrations'),
+    // Url to connect to DB
+    'url': process.env.DB_URL
+}
