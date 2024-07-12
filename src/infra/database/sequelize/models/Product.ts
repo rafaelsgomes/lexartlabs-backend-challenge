@@ -1,6 +1,7 @@
 import { CreationOptional, DataTypes, Model } from 'sequelize'
 import { SequelizeProductSchema } from './schemas/sequelizeProductSchema'
 import { SequelizeConnection } from '..'
+import { SequelizeUserModel } from './User'
 
 export class SequelizeProductModel extends Model<SequelizeProductSchema> {
   declare id: string
@@ -10,6 +11,13 @@ export class SequelizeProductModel extends Model<SequelizeProductSchema> {
   declare imageUrl: string
   declare createdAt: Date
   declare updatedAt: CreationOptional<Date>
+
+  static associate() {
+    this.belongsTo(SequelizeUserModel, {
+      foreignKey: 'userId',
+      as: 'user',
+    })
+  }
 }
 
 const sequelize = SequelizeConnection.getInstance()
@@ -55,3 +63,5 @@ SequelizeProductModel.init(
     sequelize,
   },
 )
+
+SequelizeProductModel.associate()

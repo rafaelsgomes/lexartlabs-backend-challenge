@@ -30,6 +30,16 @@ export class SequelizeProductsRepository implements IProductsRepository {
     return products.map(SequelizeProductMapper.toDomain)
   }
 
+  async findAllByUserId(userId: string): Promise<Product[]> {
+    const products = await this.model.findAll({
+      where: {
+        userId,
+      },
+    })
+
+    return products.map(SequelizeProductMapper.toDomain)
+  }
+
   async findManyProducts(page: number): Promise<Product[]> {
     const products = await this.model.findAll({
       limit: 50,

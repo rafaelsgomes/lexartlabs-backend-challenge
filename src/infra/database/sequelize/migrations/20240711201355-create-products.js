@@ -9,7 +9,7 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      userId: {
+      user_id: {
         type: Sequelize.UUID,
         allowNull: false,
         references: { model: 'users', key: 'id' },
@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      imageUrl: {
+      image_url: {
         type: Sequelize.STRING,
         allowNull: false,
       },
