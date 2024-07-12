@@ -2,13 +2,16 @@ import { InMemoryProductsRepository } from 'test/repositories/inMemoryProductsRe
 import { DeleteAllProductsByUserIdUseCase } from './deleteAllProductsByUserId'
 import { makeProduct } from 'test/factories/makeProduct'
 import { makeUser } from 'test/factories/makeUser'
+import { InMemoryLogger } from 'test/logger/inMemoryLogger'
 
 let repository: InMemoryProductsRepository
+let logger: InMemoryLogger
 let sut: DeleteAllProductsByUserIdUseCase
 describe('Delete All Products', () => {
   beforeEach(() => {
     repository = new InMemoryProductsRepository()
-    sut = new DeleteAllProductsByUserIdUseCase(repository)
+    logger = new InMemoryLogger()
+    sut = new DeleteAllProductsByUserIdUseCase(repository, logger)
   })
 
   it('should be able to delete all a products', async () => {
@@ -35,5 +38,6 @@ describe('Delete All Products', () => {
     })
 
     expect(repository.items).toHaveLength(1)
+    expect(logger.total).toEqual(2)
   })
 })
