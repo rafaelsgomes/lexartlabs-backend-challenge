@@ -6,6 +6,7 @@ import { FetchProductsByUserIdController } from './fetchProductsByUserIdControll
 import { GetProductByIdController } from './getProductController'
 import { UpdateProductController } from './updateProductController'
 import { DeleteProductController } from './deleteProductController'
+import { DeleteAllProductsByUserIdController } from './deleteAllProductsByUserIdController'
 
 const createProductController = new CreateProductController()
 const fetchAllProductsController = new FetchAllProductsController()
@@ -13,6 +14,8 @@ const fetchProductsByUserIdController = new FetchProductsByUserIdController()
 const getProductByIdController = new GetProductByIdController()
 const updateProductController = new UpdateProductController()
 const deleteProductController = new DeleteProductController()
+const deleteAllProductsByUserIdController =
+  new DeleteAllProductsByUserIdController()
 
 export const productsRoutes = Router()
 
@@ -48,4 +51,12 @@ productsRoutes.delete(
   '/products/:productId',
   passport.authenticate('jwt', { session: false }),
   deleteProductController.handle.bind(deleteProductController),
+)
+
+productsRoutes.delete(
+  '/products',
+  passport.authenticate('jwt', { session: false }),
+  deleteAllProductsByUserIdController.handle.bind(
+    deleteAllProductsByUserIdController,
+  ),
 )

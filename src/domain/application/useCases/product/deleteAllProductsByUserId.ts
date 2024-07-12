@@ -29,6 +29,10 @@ export class DeleteAllProductsByUserIdUseCase {
   }: DeleteAllProductsByUserIdUseCaseRequest): Promise<DeleteAllProductsByUserIdUseCaseResponse> {
     const products = await this.productsRepository.findAllByUserId(userId)
 
+    if (products.length < 1) {
+      return
+    }
+
     await this.productsRepository.deleteAllByUserId(userId)
 
     const data: ProductsData[] = []
