@@ -3,10 +3,12 @@ import { CreateProductController } from './createProductController'
 import passport from '@/infra/auth/jwt.strategy'
 import { FetchAllProductsController } from './fetchAllProductsController'
 import { FetchProductsByUserIdController } from './fetchProductsByUserIdController'
+import { GetProductByIdController } from './getProductController'
 
 const createProductController = new CreateProductController()
 const fetchAllProductsController = new FetchAllProductsController()
 const fetchProductsByUserIdController = new FetchProductsByUserIdController()
+const getProductByIdController = new GetProductByIdController()
 
 export const productsRoutes = Router()
 
@@ -25,4 +27,9 @@ productsRoutes.get(
   '/products/user-products',
   passport.authenticate('jwt', { session: false }),
   fetchProductsByUserIdController.handle.bind(fetchProductsByUserIdController),
+)
+
+productsRoutes.get(
+  '/products/:productId',
+  getProductByIdController.handle.bind(getProductByIdController),
 )
