@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { ProductPresenter } from '../../presenters/productPresenter'
 import { ProductNotFoundError } from '@/domain/application/useCases/_errors/ProductNotFoundError'
 
-const fetchAllProductsParamSchema = z.object({
+const getProductByIdParamSchema = z.object({
   productId: z.string().uuid(),
 })
 
@@ -17,7 +17,7 @@ export class GetProductByIdController {
   )
 
   async handle(request: Request, response: Response) {
-    const { productId } = fetchAllProductsParamSchema.parse(request.params)
+    const { productId } = getProductByIdParamSchema.parse(request.params)
     try {
       const { product } = await this.useCase.execute({ productId })
       return response.status(200).send({
