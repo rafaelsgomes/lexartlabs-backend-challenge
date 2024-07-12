@@ -38,6 +38,6 @@ describe('Delete All Products', () => {
     })
 
     expect(repository.items).toHaveLength(1)
-    expect(logger.total).toEqual(2)
+    expect(logger.items.length).toEqual(2)
   })
 })

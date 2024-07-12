@@ -31,7 +31,7 @@ describe('Delete Product', () => {
     })
 
     expect(repository.items).toHaveLength(0)
-    expect(logger.total).toEqual(1)
+    expect(logger.items.length).toEqual(1)
   })
 
   it('should not be able to delete a product that does not exists', async () => {

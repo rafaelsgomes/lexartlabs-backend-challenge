@@ -7,6 +7,7 @@ export interface IProductsRepository {
   findAllByUserId(userId: string): Promise<Product[]>
   findManyProducts(page: number): Promise<Product[]>
   findById(productId: string): Promise<Product | null>
+  search(query: string): Promise<Product[]>
   delete(productId: string): Promise<void>
   deleteAllByUserId(userId: string): Promise<void>
 }
