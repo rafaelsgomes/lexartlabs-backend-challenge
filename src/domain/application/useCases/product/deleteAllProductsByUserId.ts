@@ -15,6 +15,7 @@ type ProductsData = {
   userId: string
   createdAt: Date
   updatedAt?: Date | null
+  deletedAt: Date
 }
 
 export class DeleteAllProductsByUserIdUseCase {
@@ -31,7 +32,7 @@ export class DeleteAllProductsByUserIdUseCase {
     await this.productsRepository.deleteAllByUserId(userId)
 
     const data: ProductsData[] = []
-
+    const deletedAt: Date = new Date()
     products.map((product) =>
       data.push({
         id: product.id,
@@ -41,6 +42,7 @@ export class DeleteAllProductsByUserIdUseCase {
         imageUrl: product.imageUrl,
         createdAt: product.createdAt,
         updatedAt: product.updatedAt ?? null,
+        deletedAt,
       }),
     )
 

@@ -1,16 +1,19 @@
 import { InMemoryProductsRepository } from 'test/repositories/inMemoryProductsRepository'
-import { DeleteProductUseCaseUseCase } from './deleteProduct'
+import { DeleteProductUseCase } from './deleteProduct'
 import { makeProduct } from 'test/factories/makeProduct'
 import { ProductNotFoundError } from '../_errors/ProductNotFoundError'
 import { makeUser } from 'test/factories/makeUser'
 import { NotAllowedError } from '../_errors/NotAllowedError'
+import { InMemoryLogger } from 'test/logger/inMemoryLogger'
 
 let repository: InMemoryProductsRepository
-let sut: DeleteProductUseCaseUseCase
+let logger: InMemoryLogger
+let sut: DeleteProductUseCase
 describe('Delete Product', () => {
   beforeEach(() => {
     repository = new InMemoryProductsRepository()
-    sut = new DeleteProductUseCaseUseCase(repository)
+    logger = new InMemoryLogger()
+    sut = new DeleteProductUseCase(repository, logger)
   })
 
   it('should be able to delete a product', async () => {
@@ -28,6 +31,7 @@ describe('Delete Product', () => {
     })
 
     expect(repository.items).toHaveLength(0)
+    expect(logger.total).toEqual(1)
   })
 
   it('should not be able to delete a product that does not exists', async () => {
