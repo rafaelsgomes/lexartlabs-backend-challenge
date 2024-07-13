@@ -1,0 +1,496 @@
+openapi: 3.0.0
+info:
+  title: Lexartlabs API fullstack developer challenge
+  version: 1.0.0
+  description: This API was developed for the Lexartlabs fullstack developer challenge
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - password
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: uuid
+          description: The auto-generated id of the user
+        name:
+          type: string
+          description: The name of the user
+        email:
+          type: string
+          description: The email of the user
+        password:
+          type: string
+          description: The password of the user
+        created_at:
+          type: date
+          description: The created date user
+        updated_at:
+          type: date
+          description: The lats updated date user
+      example:
+        id: fa9fb2f0-4d3d-48a3-bd79-a9750bcc8d10
+        name: 'John Doe'
+        email: 'johndoe@emai.com'
+        password: '123456'
+        created_at: 2024-02-03T06:38:34.000Z 
+        updated_at: 2024-04-03T09:28:04.000Z 
+    Product:
+        type: object
+        required:
+          - id
+          - name
+          - description
+          - imageUrl
+          - user_id
+          - created_at
+          - updated_at
+        properties:
+          id:
+            type: uuid
+            description: The auto-generated id of the product
+          name:
+            type: string
+            description: The name of the product
+          description:
+            type: string
+            description: The description of the product
+          image_url:
+            type: string
+            description: The image_url of the product
+          created_at:
+            type: date
+            description: The created date product
+          updated_at:
+            type: date
+            description: The lats updated date product
+        example:
+          id: fa9fb2f0-4d3d-48a3-bd79-a9750bcc8d10
+          name: 'Product 01'
+          description: 'this is the description of product 01'
+          image_url: 'https://samsungbrshop.vtexassets.com/arquivos/ids/228354-600-auto?v=638411055391430000&width=600&height=auto&aspect=true'
+          created_at: 2024-02-03T06:38:34.000Z 
+          updated_at: 2024-04-03T09:28:04.000Z 
+    Token:
+      type: object
+      required:
+        - access_token
+      properties:
+        access_token:
+          type: string
+      example:
+        access_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhN2Q2ZjFjNS1hZGZlLTRkZTktYWQyNS0yYzcyYTQ2ODFmZGIiLCJpYXQiOjE3MjA4ODM2OTAsImV4cCI6MTcyMDk3MDA5MH0.r7bZTPdfjVe7ihoj0ceR0LvCcIax_HzXPA5eN6XZzCP1FluyUcmFrqTe0nOCxIyB_skIHVBPQqbq4NjcZyAePuS0OFISXKlarZrBLKsVE6OXjn35wim9KwWjX44rg9zQy5t5MHrcyv2L8ks2XkmDY4dXWLvU9tixc3JIyw6Rk7mG-4BBDNHFMguiw-zTwb8x6voGm30JuOPMXjBkUM5S9JSwifXe1T0irNF3478F5VK9upDQAYMavGi_nim_R_UeMv5n43QAp_WjAwE41CT96vnDMutngdqaiSwvogbw2KFgEo0QbUYRnvWjbKLzUuXMOB6e7gO62JlnwQ3I3oeNCA
+    ProductLog:
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - imageUrl
+        - user_id
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: uuid
+          description: The auto-generated id of the product
+        name:
+          type: string
+          description: The name of the product
+        description:
+          type: string
+          description: The description of the product
+        image_url:
+          type: string
+          description: The image_url of the product
+        created_at:
+          type: date
+          description: The created date product
+        updated_at:
+          type: date
+          description: The last updated date product
+        deleted_at:
+          type: date
+          description: The deleted date product
+      example:
+        id: fa9fb2f0-4d3d-48a3-bd79-a9750bcc8d10
+        name: 'Product 01'
+        description: 'this is the description of product 01'
+        image_url: 'https://samsungbrshop.vtexassets.com/arquivos/ids/228354-600-auto?v=638411055391430000&width=600&height=auto&aspect=true'
+        created_at: 2024-02-03T06:38:34.000Z 
+        updated_at: 2024-04-03T09:28:04.000Z 
+        deleted_at: 2024-04-03T09:28:04.000Z 
+tags:
+  name: Users
+    description: The users managing API
+  name: Products
+    description: The products managing API
+paths:
+  /users/authenticate:
+    post:
+      summary: Authenticate a user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              example:
+                email: 'johndoe@email.com'
+                password: 'password123'
+      responses:
+        201:
+          description: Authenticate successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+                
+        403:
+          description: Invalid credentials
+  /users:
+    post:
+      summary: Create a new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+              example:
+                name: 'John Doe'
+                email: 'johndoe@email.com'
+                password: 'password123'
+      responses:
+        201:
+          description: User Created
+                
+        409:
+          description: Conflict
+    get:
+      summary: Get the logged user by id
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+      responses:
+        200:
+          description: The user logged by id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+        404:
+          description: Bad request
+    put:
+      summary: Update a logged user
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+              example:
+                name: 'John doe updated'
+                email: 'johndoe@email.com'
+                password: 'password123'
+      responses:
+        204:
+          description: The user was updated
+        404:
+          description: The user was not found
+        400:
+          description: Bad request
+    delete:
+      summary: Remove the logged user by id
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      responses:
+        204:
+          description: The user was deleted
+        404:
+          description: The user was not found
+  /users/update-password:
+    patch:
+      summary: Update a password logged user
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+              example:
+                currentPassword: 'password123'
+                newPassword: 'password1234' 
+      responses:
+        204:
+          description: The user password was updated
+        404:
+          description: The user was not found
+        400:
+          description: Bad request
+  /products:
+    post:
+      summary: Create a new product
+      security:
+        - bearerAuth: []
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                imageUrl:
+                  type: string
+              example:
+                name: 'Product 01'
+                description: 'this is the description of product 01'
+                imageUrl: 'https://samsungbrshop.vtexassets.com/arquivos/ids/228354-600-auto?v=638411055391430000&width=600&height=auto&aspect=true'
+      responses:
+        201:
+          description: Product Created
+                
+        404:
+          description: Product not found
+        400:
+          description: Bad Request
+    delete:
+      summary: Remove all products of the logged user
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      responses:
+        204:
+          description: All products user was deleted
+  /products/test-products:
+    post:
+      summary: Provide 50 products of test to logged user
+      security:
+        - bearerAuth: []
+      tags:
+        - Products
+      responses:
+        201:
+          description: Products Created    
+        400:
+          description: Bad Request
+  /products/list:
+    get:
+      summary: List products
+      tags:
+        - Products
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: number
+          required: true
+          description: The number of page
+      responses:
+        200:
+          description: Listed Products   
+          content:
+            application/json:
+              schema: 
+               type: object
+               properties:
+                products:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Product' 
+        400:
+          description: Bad Request
+  /products/user-products:
+    get:
+      summary: List user products
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: number
+          required: true
+          description: The number of page
+      responses:
+        200:
+          description: Listed user Products   
+          content:
+            application/json:
+              schema: 
+               type: object
+               properties:
+                products:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Product' 
+        400:
+          description: Bad Request
+  /products/search:
+    get:
+      summary: Search products
+      tags:
+        - Products
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          required: true
+          description: The query to search products
+      responses:
+        200:
+          description: Searched products   
+          content:
+            application/json:
+              schema: 
+               type: object
+               properties:
+                products:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Product' 
+        400:
+          description: Bad Request
+  /products/logs:
+    get:
+      summary: Get log of deleted products for logged user
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Log of deleted products   
+          content:
+            application/json:
+              schema: 
+               type: object
+               properties:
+                productsLog:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ProductLog' 
+        400:
+          description: Bad Request
+  /products/{productId}:
+    get:
+      summary: Get product by id
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: productId
+          schema:
+            type: string
+          required: true
+          description: The product id
+      responses:
+        200:
+          description: Details product   
+          content:
+            application/json:
+              schema: 
+               type: object
+               properties:
+                product:
+                  $ref: '#/components/schemas/Product'
+        400:
+          description: Bad Request
+    put:
+      summary: Update product by id
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: productId
+          schema:
+            type: string
+          required: true
+          description: The product id
+      responses:
+        204:
+          description: Updated product      
+        400:
+          description: Bad Request
+    delete:
+      summary: Delete product by id
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: productId
+          schema:
+            type: string
+          required: true
+          description: The product id
+      responses:
+        204:
+          description: Deleted product       
+        400:
+          description: Bad Request
