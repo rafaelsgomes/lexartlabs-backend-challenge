@@ -18,7 +18,7 @@ export class DeleteAllProductsByUserIdController {
     const { sub } = request.user as UserPayload
 
     try {
-      await this.useCase.execute({
+      this.useCase.execute({
         userId: sub,
       })
     } catch (error) {

@@ -7,6 +7,9 @@ import { GetProductByIdController } from './getProductController'
 import { UpdateProductController } from './updateProductController'
 import { DeleteProductController } from './deleteProductController'
 import { DeleteAllProductsByUserIdController } from './deleteAllProductsByUserIdController'
+import { SearchProductsController } from './searchProductsController'
+import { GetLogOfDeletedProductsController } from './getLogOfDeletedProductsController'
+import { ProvideProductsTestController } from './provideProductsTestController'
 
 const createProductController = new CreateProductController()
 const fetchAllProductsController = new FetchAllProductsController()
@@ -14,8 +17,12 @@ const fetchProductsByUserIdController = new FetchProductsByUserIdController()
 const getProductByIdController = new GetProductByIdController()
 const updateProductController = new UpdateProductController()
 const deleteProductController = new DeleteProductController()
+const searchProductsController = new SearchProductsController()
 const deleteAllProductsByUserIdController =
   new DeleteAllProductsByUserIdController()
+const getLogOfDeletedProductsController =
+  new GetLogOfDeletedProductsController()
+const provideProductsTestController = new ProvideProductsTestController()
 
 export const productsRoutes = Router()
 
@@ -23,6 +30,12 @@ productsRoutes.post(
   '/products',
   passport.authenticate('jwt', { session: false }),
   createProductController.handle.bind(createProductController),
+)
+
+productsRoutes.post(
+  '/products/test-products',
+  passport.authenticate('jwt', { session: false }),
+  provideProductsTestController.handle.bind(provideProductsTestController),
 )
 
 productsRoutes.get(
@@ -34,6 +47,19 @@ productsRoutes.get(
   '/products/user-products',
   passport.authenticate('jwt', { session: false }),
   fetchProductsByUserIdController.handle.bind(fetchProductsByUserIdController),
+)
+
+productsRoutes.get(
+  '/products/search',
+  searchProductsController.handle.bind(searchProductsController),
+)
+
+productsRoutes.get(
+  '/products/logs',
+  passport.authenticate('jwt', { session: false }),
+  getLogOfDeletedProductsController.handle.bind(
+    getLogOfDeletedProductsController,
+  ),
 )
 
 productsRoutes.get(

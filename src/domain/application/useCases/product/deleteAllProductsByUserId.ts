@@ -1,22 +1,12 @@
 import { ILogger } from '../../logger/ILogger'
 import { IProductsRepository } from '../../repositories/IProductsRepository'
+import { ProductLog } from './getLogOfDeletedProducts'
 
 type DeleteAllProductsByUserIdUseCaseRequest = {
   userId: string
 }
 
 type DeleteAllProductsByUserIdUseCaseResponse = void
-
-type ProductsData = {
-  id: string
-  name: string
-  description: string
-  imageUrl: string
-  userId: string
-  createdAt: Date
-  updatedAt?: Date | null
-  deletedAt: Date
-}
 
 export class DeleteAllProductsByUserIdUseCase {
   constructor(
@@ -35,7 +25,7 @@ export class DeleteAllProductsByUserIdUseCase {
 
     await this.productsRepository.deleteAllByUserId(userId)
 
-    const data: ProductsData[] = []
+    const data: ProductLog[] = []
     const deletedAt: Date = new Date()
     products.map((product) =>
       data.push({

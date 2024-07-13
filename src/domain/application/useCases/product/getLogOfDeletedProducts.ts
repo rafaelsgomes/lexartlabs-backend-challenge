@@ -5,7 +5,7 @@ type GetLogOfDeletedProductsUseCaseRequest = {
   userId: string
 }
 
-type ProductsData = {
+export type ProductLog = {
   id: string
   name: string
   description: string
@@ -17,7 +17,7 @@ type ProductsData = {
 }
 
 type GetLogOfDeletedProductsUseCaseResponse = {
-  products: ProductsData[]
+  productsLog: ProductLog[]
 }
 
 export class GetLogOfDeletedProductsUseCase {
@@ -25,16 +25,16 @@ export class GetLogOfDeletedProductsUseCase {
   async execute({
     userId,
   }: GetLogOfDeletedProductsUseCaseRequest): Promise<GetLogOfDeletedProductsUseCaseResponse> {
-    const productsData: ProductsData[] = await this.logger.getDataFile(
+    const productsLog: ProductLog[] = await this.logger.getDataFile(
       `${userId}-deleted-products`,
     )
 
-    if (!productsData.length) {
+    if (!productsLog.length) {
       throw new UserLogFileNotFoundError()
     }
 
     return {
-      products: productsData,
+      productsLog,
     }
   }
 }

@@ -7,6 +7,7 @@ import { SequelizeProductModel } from '@/infra/database/sequelize/models/Product
 import request from 'supertest'
 import { ProductFactory } from 'test/factories/makeProduct'
 import { UserFactory } from 'test/factories/makeUser'
+import { waitFor } from 'test/utils/waitFor'
 
 describe('Delete Product (E2E)', () => {
   let userFactory: UserFactory
@@ -56,14 +57,16 @@ describe('Delete Product (E2E)', () => {
       .send()
 
     expect(response.status).toBe(204)
-    const productOnDatabase = await SequelizeProductModel.findOne({
-      where: {
-        userId: user.id,
-      },
+    await waitFor(async () => {
+      const productOnDatabase = await SequelizeProductModel.findOne({
+        where: {
+          userId: user.id,
+        },
+      })
+      expect(productOnDatabase).toBeNull()
+      fileName = `${user.id}-deleted-products.json`
+      expect(fs.existsSync(path.resolve(filePath, fileName))).toBeTruthy()
     })
-    expect(productOnDatabase).toBeNull()
-    fileName = `${user.id}-deleted-products.json`
-    expect(fs.existsSync(path.resolve(filePath, fileName))).toBeTruthy()
   })
 
   afterAll(() => {

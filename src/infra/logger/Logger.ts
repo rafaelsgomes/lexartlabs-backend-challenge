@@ -3,6 +3,14 @@ import fs from 'node:fs'
 import * as path from 'path'
 
 export class Logger implements ILogger {
+  private readFile(filePath: string, nameFile: string): Promise<any[]> {
+    const data = fs.readFileSync(path.resolve(filePath, `${nameFile}`), {
+      encoding: 'utf-8',
+    })
+
+    return JSON.parse(data)
+  }
+
   private async writeJsonFile(filePath: string, data: any): Promise<void> {
     try {
       return fs.writeFileSync(filePath, JSON.stringify(data, null, 2), {
@@ -32,12 +40,7 @@ export class Logger implements ILogger {
         )
       }
 
-      const existingRecords = fs.readFileSync(
-        path.resolve(filePath, `${nameFile}.json`),
-        {
-          encoding: 'utf-8',
-        },
-      )
+      const existingRecords = await this.readFile(filePath, `${nameFile}.json`)
       const records = [...existingRecords, ...data]
       return this.writeJsonFile(
         path.resolve(filePath, `${nameFile}.json`),
@@ -47,5 +50,22 @@ export class Logger implements ILogger {
       console.error('Error reading file:', error)
       throw new Error(error)
     }
+  }
+
+  async getDataFile(nameFile: string): Promise<any[]> {
+    const filePath = path.resolve(
+      __dirname,
+      '../',
+      '../',
+      '../',
+      'logs',
+      'deleted-products',
+    )
+
+    if (!fs.existsSync(path.resolve(filePath, `${nameFile}.json`))) {
+      return []
+    }
+
+    return this.readFile(filePath, `${nameFile}.json`)
   }
 }

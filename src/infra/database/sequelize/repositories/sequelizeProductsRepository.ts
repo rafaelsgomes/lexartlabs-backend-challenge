@@ -2,7 +2,7 @@ import { IProductsRepository } from '@/domain/application/repositories/IProducts
 import { Product } from '@/domain/entities/Product'
 import { SequelizeProductModel } from '../models/Product'
 import { SequelizeProductMapper } from '../mappers/sequelizeProductMapper'
-import { ModelStatic } from 'sequelize'
+import { ModelStatic, Op } from 'sequelize'
 
 export class SequelizeProductsRepository implements IProductsRepository {
   private model: ModelStatic<SequelizeProductModel> = SequelizeProductModel
@@ -57,6 +57,23 @@ export class SequelizeProductsRepository implements IProductsRepository {
     }
 
     return SequelizeProductMapper.toDomain(product)
+  }
+
+  async search(query: string): Promise<Product[]> {
+    const products = await this.model.findAll({
+      where: {
+        [Op.or]: {
+          name: {
+            [Op.like]: `%${query}%`,
+          },
+          description: {
+            [Op.like]: `%${query}%`,
+          },
+        },
+      },
+    })
+
+    return products.map(SequelizeProductMapper.toDomain)
   }
 
   async delete(productId: string): Promise<void> {

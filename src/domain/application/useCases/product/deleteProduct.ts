@@ -2,6 +2,7 @@ import { ILogger } from '../../logger/ILogger'
 import { IProductsRepository } from '../../repositories/IProductsRepository'
 import { NotAllowedError } from '../_errors/NotAllowedError'
 import { ProductNotFoundError } from '../_errors/ProductNotFoundError'
+import { ProductLog } from './getLogOfDeletedProducts'
 
 type DeleteProductUseCaseRequest = {
   productId: string
@@ -10,16 +11,6 @@ type DeleteProductUseCaseRequest = {
 
 type DeleteProductUseCaseResponse = void
 
-type ProductsData = {
-  id: string
-  name: string
-  description: string
-  imageUrl: string
-  userId: string
-  createdAt: Date
-  updatedAt?: Date | null
-  deletedAt: Date
-}
 export class DeleteProductUseCase {
   constructor(
     private productsRepository: IProductsRepository,
@@ -43,7 +34,7 @@ export class DeleteProductUseCase {
     await this.productsRepository.delete(productId)
 
     const deletedAt: Date = new Date()
-    const data: ProductsData = {
+    const data: ProductLog = {
       id: product.id,
       userId: product.userId,
       name: product.name,

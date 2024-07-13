@@ -3,6 +3,7 @@ import { Product } from '@/domain/entities/Product'
 export class ProductPresenter {
   static toHttp(product: Product) {
     return {
+      id: product.id,
       name: product.name,
       description: product.description,
       image_url: product.imageUrl,
