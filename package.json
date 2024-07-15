@@ -12,7 +12,8 @@
 		"test:watch": "vitest",
 		"test:cov": "vitest run --coverage",
 		"test:debug": "vitest --inspect-brk --inspect --logHeapUsage --threads=false",
-		"test:e2e": "vitest run --config ./vitest.config.e2e.ts"
+		"test:e2e": "vitest run --config ./vitest.config.e2e.ts",
+		"vercel-build": "pnpm sequelize db:migrate"
 	},
 	"author": "contato@rafaelsgomes.com.br",
 	"license": "ISC",
