@@ -10,7 +10,6 @@ export const envSchema = z.object({
   DB_HOST: z.string(),
   DB_DRIVER: z.string(),
   DB_PASSWORD: z.string(),
-  DB_PORT: z.coerce.number(),
   JWT_PRIVATE_KEY: z.string(),
   JWT_PUBLIC_KEY: z.string(),
 })
