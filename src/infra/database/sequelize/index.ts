@@ -1,6 +1,6 @@
 import { env } from '@/infra/env'
 import { Dialect, Sequelize } from 'sequelize'
-import { generateUniqueDatabaseURL } from 'test/utils/setDBUrl'
+import { generateUniqueDatabaseURL } from '@/core/utils/setDBUrl'
 
 export class SequelizeConnection {
   private static instance: Sequelize

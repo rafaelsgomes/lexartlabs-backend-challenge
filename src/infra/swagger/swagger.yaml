@@ -162,7 +162,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Token'
-                
         403:
           description: Invalid credentials
   /users:
@@ -190,7 +189,6 @@ paths:
       responses:
         201:
           description: User Created
-                
         409:
           description: Conflict
     get:
@@ -307,7 +305,6 @@ paths:
       responses:
         201:
           description: Product Created
-                
         404:
           description: Product not found
         400:

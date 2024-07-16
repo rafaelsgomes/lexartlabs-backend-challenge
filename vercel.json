@@ -1,22 +1,18 @@
 {
   "version": 2,
   "builds": [
-      {
-          "src": "build/infra/server.js",
-          "use": "@vercel/node",
-          "config": { "includeFiles": ["build/**"] }
+    {
+      "src": "build/src/infra/server.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["build/src/**/*"]
       }
+    }
   ],
   "routes": [
-      {
-          "src": "/(.*)",
-          "dest": "build/infra/server.js",
-          "headers": {
-            "Access-Control-Allow-Credentials": "true",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
-            "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-          }
-      }
+    {
+      "src": "/(.*)",
+      "dest": "build/src/infra/server.js"
+    }
   ]
 }

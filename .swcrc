@@ -1,0 +1,31 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false,
+      "dynamicImport": true,
+      "decorators": false
+    },
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "transform": {
+      "legacyDecorator": false,
+      "decoratorMetadata": false
+    },
+    "target": "es2021",
+    "loose": false,
+    "externalHelpers": false,
+    "keepClassNames": true
+  },
+  "module": {
+    "type": "commonjs",
+    "strict": false,
+    "strictMode": false,
+    "noInterop": false,
+    "lazy": false,
+    "preserveImportMeta": true
+  },
+  "sourceMaps": true
+}

@@ -2,28 +2,29 @@
 	"name": "lexartlabs-fullstack-challenge-api",
 	"description": "",
 	"version": "1.0.0",
-	"main": "server.js",
+	"main": "build/src/infra/server.js",
 	"scripts": {
 		"start:dev": "tsx watch src/infra/server.ts",
-		"start": "node build/infra/server.js",
-		"build": "tsup src --out-dir build",
+		"start": "node build/src/infra/server.js",
+		"build": "rm -rf build && swc src --copy-files -d build",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"test:cov": "vitest run --coverage",
 		"test:debug": "vitest --inspect-brk --inspect --logHeapUsage --threads=false",
 		"test:e2e": "vitest run --config ./vitest.config.e2e.ts",
-		"sequelize": "npx sequelize db:migrate"
+		"vercel-build": "npx sequelize db:migrate"
 	},
 	"pre-commit": [
-      "build",
-      "sequelize"
-  ],
+		"sequelize",
+		"build"
+	],
 	"author": "contato@rafaelsgomes.com.br",
 	"license": "ISC",
 	"devDependencies": {
 		"@faker-js/faker": "^8.4.1",
 		"@rocketseat/eslint-config": "^2.2.2",
+		"@swc/cli": "^0.4.0",
 		"@swc/core": "^1.6.13",
 		"@types/bcryptjs": "^2.4.6",
 		"@types/cors": "^2.8.17",

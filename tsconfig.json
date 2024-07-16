@@ -24,6 +24,7 @@
     },
     "types": [
       "vitest/globals"
-    ]
-  }
+    ],
+  },
+  "exclude": ["node_modules", "dist", "*.spec.ts", "*.e2e-spec.ts", "test"],
 }
