@@ -1,9 +1,16 @@
-{ 
-  "version": 2, 
-  "rewrites": [
-    {
-    "source": "/(.*)", 
-    "destination": "/api"
-  }
-  ] 
+{
+  "version": 2,
+  "builds": [
+      {
+          "src": "build/infra/server.js",
+          "use": "@vercel/node",
+          "config": { "includeFiles": ["build/**"] }
+      }
+  ],
+  "routes": [
+      {
+          "src": "/(.*)",
+          "dest": "build/infra/server.js"
+      }
+  ]
 }
